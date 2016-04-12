@@ -1,0 +1,9 @@
+[submodule "universal-tween-engine-cpp"]
+	path = universal-tween-engine-cpp
+	url = https://github.com/cpp3ds/universal-tween-engine-cpp.git
+[submodule "external"]
+	path = external
+	url = https://github.com/cpp3ds/universal-tween-engine-cpp.git
+[submodule "external/tween-engine"]
+	path = external/tween-engine
+	url = https://github.com/cpp3ds/universal-tween-engine-cpp.git
