@@ -42,8 +42,7 @@
 		</state>
 		<state name="active"><image x="255" y="0" w="1" h="28"></image></state>
 	</style>
-
-	<input style="input" x="0" y="58" w="320" h="28" max-width="260" cursor-color="#FFFFFFFF" cursor-height="22"></input>
+	<input style="input" x="66" y="58" w="320" h="28" max-width="260" cursor-color="#FFFFFFFF" cursor-height="22"></input>
 
 	<layout name="lowercase" label="abc123">
 		<button style="basic" x="6" y="88" w="28" h="28">1</button>
