@@ -1,5 +1,5 @@
-#ifndef DRAWATTACK_STATESTACK_HPP
-#define DRAWATTACK_STATESTACK_HPP
+#ifndef FUMAROOS_STATESTACK_HPP
+#define FUMAROOS_STATESTACK_HPP
 
 #include "State.hpp"
 #include "StateIdentifiers.hpp"
@@ -11,73 +11,74 @@
 #include <map>
 
 
-namespace DrawAttack {
+namespace Fumaroos {
 
-class StateStack : private cpp3ds::NonCopyable
-{
-public:
-	enum Action {
-		Push,
-		Pop,
-		Clear,
-	};
+    class StateStack : private cpp3ds::NonCopyable {
+    public:
+        enum Action {
+            Push,
+            Pop,
+            Clear,
+        };
 
-public:
-	explicit StateStack(State::Context context);
+    public:
+        explicit StateStack(State::Context context);
 
-	template <typename T>
-	void registerState(States::ID stateID);
+        template<typename T>
+        void registerState(States::ID stateID);
 
-	void update(float delta);
-	void renderTopScreen(cpp3ds::Window& window);
-	void renderBottomScreen(cpp3ds::Window& window);
-	void processEvent(const cpp3ds::Event& event);
+        void update(float delta);
 
-	void pushState(States::ID stateID);
-	void popState();
-	void clearStates();
+        void renderTopScreen(cpp3ds::Window &window);
 
-	bool isEmpty() const;
+        void renderBottomScreen(cpp3ds::Window &window);
 
+        void processEvent(const cpp3ds::Event &event);
 
-private:
-	State::Ptr createState(States::ID stateID);
-	void       applyPendingChanges();
+        void pushState(States::ID stateID);
 
+        void popState();
 
-private:
-	struct PendingChange
-	{
-		explicit PendingChange(Action action, States::ID stateID = States::None);
+        void clearStates();
 
-		Action     action;
-		States::ID stateID;
-	};
-
-	struct StateStackItem
-	{
-		States::ID id;
-		State::Ptr pointer;
-	};
-
-private:
-	std::vector<StateStackItem>    m_stack;
-	std::vector<PendingChange> m_pendingList;
-
-	State::Context m_context;
-	std::map<States::ID, std::function<State::Ptr()>> m_factories;
-};
+        bool isEmpty() const;
 
 
-template <typename T>
-void StateStack::registerState(States::ID stateID)
-{
-	m_factories[stateID] = [this] ()
-	{
-		return State::Ptr(new T(*this, m_context));
-	};
-}
+    private:
+        State::Ptr createState(States::ID stateID);
 
-} // namespace DrawAttack
+        void applyPendingChanges();
 
-#endif // DRAWATTACK_STATESTACK_HPP
+
+    private:
+        struct PendingChange {
+            explicit PendingChange(Action action, States::ID stateID = States::None);
+
+            Action action;
+            States::ID stateID;
+        };
+
+        struct StateStackItem {
+            States::ID id;
+            State::Ptr pointer;
+        };
+
+    private:
+        std::vector<StateStackItem> m_stack;
+        std::vector<PendingChange> m_pendingList;
+
+        State::Context m_context;
+        std::map<States::ID, std::function<State::Ptr()>> m_factories;
+    };
+
+
+    template<typename T>
+    void StateStack::registerState(States::ID stateID) {
+        m_factories[stateID] = [this]() {
+            return State::Ptr(new T(*this, m_context));
+        };
+    }
+
+} // namespace Fumaroos
+
+#endif // FUMAROOS_STATESTACK_HPP

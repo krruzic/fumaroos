@@ -1,7 +1,7 @@
-#ifndef DRAWATTACK_STATEIDENTIFIERS_HPP
-#define DRAWATTACK_STATEIDENTIFIERS_HPP
+#ifndef FUMAROOS_STATEIDENTIFIERS_HPP
+#define FUMAROOS_STATEIDENTIFIERS_HPP
 
-namespace DrawAttack {
+namespace Fumaroos {
 	namespace States {
 		enum ID {
 			None,
@@ -13,4 +13,4 @@ namespace DrawAttack {
 	}
 }
 
-#endif // DRAWATTACK_STATEIDENTIFIERS_HPP
+#endif // FUMAROOS_STATEIDENTIFIERS_HPP

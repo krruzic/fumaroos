@@ -1,15 +1,16 @@
-#ifndef FUMAROOS_TITLESTATE_HPP
-#define FUMAROOS_TITLESTATE_HPP
+#ifndef FUMAROOS_CREATEPET_HPP
+#define FUMAROOS_CREATEPET_HPP
 
 #include "State.hpp"
+#include "../Keyboard/Keyboard.hpp"
 #include <cpp3ds/Graphics/Sprite.hpp>
 #include <cpp3ds/Graphics/Text.hpp>
 
 namespace Fumaroos {
 
-    class TitleState : public State {
+    class CreatePet : public State {
     public:
-        TitleState(StateStack &stack, Context &context);
+        CreatePet(StateStack &stack, Context &context);
 
         virtual void renderTopScreen(cpp3ds::Window &window);
 
@@ -19,17 +20,13 @@ namespace Fumaroos {
 
         virtual bool processEvent(const cpp3ds::Event &event);
 
-        bool checkSave();
 
     private:
-        cpp3ds::Text m_textTitle;
         cpp3ds::Text m_text;
-        cpp3ds::Texture m_titleTexture;
-        cpp3ds::Sprite m_titleBackground;
-        bool m_showText;
-        float m_textEffectTime;
+        cpp3ds::RectangleShape m_rectangle;
+        util3ds::Keyboard m_keyboard;
     };
 
 } // namespace Fumaroos
 
-#endif // FUMAROOS_TITLESTATE_HPP
+#endif // FUMAROOS_CREATEPET_HPP
