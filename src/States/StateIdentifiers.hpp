@@ -7,7 +7,7 @@ namespace Fumaroos {
 			None,
 			Title,
 			Menu,
-			CreatePet,
+			NamePet,
 			Play,
 		};
 	}

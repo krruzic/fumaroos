@@ -1,7 +1,8 @@
-#ifndef FUMAROOS_CREATEPET_HPP
-#define FUMAROOS_CREATEPET_HPP
+#ifndef FUMAROOS_NAMEPET_HPP
+#define FUMAROOS_NAMEPET_HPP
 
 #include "State.hpp"
+#include "../GUI/ToggleButton.hpp"
 #include "../GUI/Button.hpp"
 #include "../Keyboard/Keyboard.hpp"
 #include <cpp3ds/Graphics/Sprite.hpp>
@@ -10,9 +11,9 @@
 
 namespace Fumaroos {
 
-    class CreatePet : public State {
+    class NamePet : public State {
     public:
-        CreatePet(StateStack &stack, Context &context);
+        NamePet(StateStack &stack, Context &context);
 
         virtual void renderTopScreen(cpp3ds::Window &window);
 
@@ -28,11 +29,15 @@ namespace Fumaroos {
         cpp3ds::Text m_text;
         cpp3ds::RectangleShape m_rectangle;
         util3ds::Keyboard m_keyboard;
-        cpp3ds::Texture m_buttonTexture;
-        cpp3ds::Texture m_buttonActiveTexture;
-        gui3ds::Button m_sexButton;
+        cpp3ds::Texture m_sexButtonTexture;
+        cpp3ds::Texture m_sexButtonActiveTexture;
+        cpp3ds::Texture m_backButtonTexture;
+        cpp3ds::Texture m_backButtonActiveTexture;
+        gui3ds::ToggleButton m_sexToggle;
+        gui3ds::ToggleButton m_backButton;
+
     };
 
 } // namespace Fumaroos
 
-#endif // FUMAROOS_CREATEPET_HPP
+#endif // FUMAROOS_NAMEPET_HPP

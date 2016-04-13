@@ -12,13 +12,13 @@ namespace Fumaroos {
             : State(stack, context), m_text(), m_showText(true), m_textEffectTime(0) {
         m_titleTexture.loadFromFile("imgs/title2.png");
         m_titleBackground.setTexture(m_titleTexture);
-        m_textTitle.setCharacterSize(8);
-        m_textTitle.setColor(cpp3ds::Color::White);
+        m_textTitle.setCharacterSize(10);
+        m_textTitle.setFillColor(cpp3ds::Color::White);
         m_textTitle.setString(_("v0.1"));
-        m_textTitle.setPosition(std::floor(400.f - m_textTitle.getLocalBounds().width), 230.f);
+        m_textTitle.setPosition(std::floor(398.f - m_textTitle.getLocalBounds().width), 225.f);
 
         m_text.setCharacterSize(12);
-        m_text.setColor(cpp3ds::Color::White);
+        m_text.setFillColor(cpp3ds::Color::White);
         m_text.setString(_("Press any key to start. SELECT to exit."));
         m_text.setPosition(std::floor(200.f - m_text.getLocalBounds().width / 2), 170.f);
     }
@@ -37,7 +37,7 @@ namespace Fumaroos {
     bool TitleState::update(float delta) {
         m_textEffectTime += delta;
 
-        if (m_textEffectTime >= 0.3f) {
+        if (m_textEffectTime >= 0.5f) {
             m_showText = !m_showText;
             m_textEffectTime = 0;
         }
@@ -54,7 +54,7 @@ namespace Fumaroos {
             }
             requestStackPop();
             if (!checkSave()) {
-                requestStackPush(States::CreatePet);
+                requestStackPush(States::NamePet);
             }
         }
 

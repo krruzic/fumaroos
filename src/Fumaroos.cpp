@@ -1,7 +1,6 @@
 #include "Fumaroos.hpp"
 #include "States/TitleState.hpp"
-#include "States/CreatePet.hpp"
-
+#include "States/NamePet.hpp"
 using namespace cpp3ds;
 
 namespace Fumaroos {
@@ -10,7 +9,7 @@ namespace Fumaroos {
             : m_color(cpp3ds::Color::Black),
               m_stateStack(State::Context(m_name, m_data, m_color)) {
         m_stateStack.registerState<TitleState>(States::Title);
-        m_stateStack.registerState<CreatePet>(States::CreatePet);
+        m_stateStack.registerState<NamePet>(States::NamePet);
 
         m_stateStack.pushState(States::Title);
     }
