@@ -26,6 +26,7 @@ namespace Fumaroos {
         m_backButton.setActiveTexture(m_backButtonActiveTexture);
         m_backButton.setPosition(6.f, 2.f);
 
+
         m_backButton.onClick([this]{
             requestStackPop();
             requestStackPush(States::Title);
@@ -42,7 +43,6 @@ namespace Fumaroos {
     }
 
     void NamePet::renderTopScreen(cpp3ds::Window &window) {
-        window.draw(m_rectangle);
     }
 
     void NamePet::renderBottomScreen(cpp3ds::Window &window) {

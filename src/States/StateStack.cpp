@@ -5,12 +5,18 @@
 namespace Fumaroos {
 
     StateStack::StateStack(State::Context context)
-            : m_stack(), m_pendingList(), m_context(context), m_factories() {
+            : m_stack()
+            , m_pendingList()
+            , m_context(context)
+            , m_factories()
+    {
     }
 
-    void StateStack::update(float delta) {
+    void StateStack::update(float delta)
+    {
         // Iterate from top to bottom, stop as soon as update() returns false
-        for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); ++itr) {
+        for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); ++itr)
+        {
             if (!itr->pointer->update(delta))
                 break;
         }
@@ -18,21 +24,25 @@ namespace Fumaroos {
         applyPendingChanges();
     }
 
-    void StateStack::renderTopScreen(cpp3ds::Window &window) {
+    void StateStack::renderTopScreen(cpp3ds::Window &window)
+    {
         // Draw all active states from bottom to top
-        for (const StateStackItem &state : m_stack)
+        for(const StateStackItem& state : m_stack)
             state.pointer->renderTopScreen(window);
     }
 
-    void StateStack::renderBottomScreen(cpp3ds::Window &window) {
+    void StateStack::renderBottomScreen(cpp3ds::Window &window)
+    {
         // Draw all active states from bottom to top
-        for (const StateStackItem &state : m_stack)
+        for(const StateStackItem& state : m_stack)
             state.pointer->renderBottomScreen(window);
     }
 
-    void StateStack::processEvent(const cpp3ds::Event &event) {
+    void StateStack::processEvent(const cpp3ds::Event& event)
+    {
         // Iterate from top to bottom, stop as soon as handleEvent() returns false
-        for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); ++itr) {
+        for (auto itr = m_stack.rbegin(); itr != m_stack.rend(); ++itr)
+        {
             if (!itr->pointer->processEvent(event))
                 break;
         }
@@ -40,32 +50,40 @@ namespace Fumaroos {
         applyPendingChanges();
     }
 
-    void StateStack::pushState(States::ID stateID) {
+    void StateStack::pushState(States::ID stateID)
+    {
         m_pendingList.push_back(PendingChange(Push, stateID));
     }
 
-    void StateStack::popState() {
+    void StateStack::popState()
+    {
         m_pendingList.push_back(PendingChange(Pop));
     }
 
-    void StateStack::clearStates() {
+    void StateStack::clearStates()
+    {
         m_pendingList.push_back(PendingChange(Clear));
     }
 
-    bool StateStack::isEmpty() const {
+    bool StateStack::isEmpty() const
+    {
         return m_stack.empty();
     }
 
-    State::Ptr StateStack::createState(States::ID stateID) {
+    State::Ptr StateStack::createState(States::ID stateID)
+    {
         auto found = m_factories.find(stateID);
         assert(found != m_factories.end());
 
         return found->second();
     }
 
-    void StateStack::applyPendingChanges() {
-        for (const PendingChange &change : m_pendingList) {
-            switch (change.action) {
+    void StateStack::applyPendingChanges()
+    {
+        for(const PendingChange& change : m_pendingList)
+        {
+            switch (change.action)
+            {
                 case Push:
                     m_stack.push_back({change.stateID, createState(change.stateID)});
                     break;
@@ -84,7 +102,9 @@ namespace Fumaroos {
     }
 
     StateStack::PendingChange::PendingChange(Action action, States::ID stateID)
-            : action(action), stateID(stateID) {
+            : action(action)
+            , stateID(stateID)
+    {
     }
 
 } // namespace Fumaroos

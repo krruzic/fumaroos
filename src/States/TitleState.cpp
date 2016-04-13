@@ -31,7 +31,6 @@ namespace Fumaroos {
     }
 
     void TitleState::renderBottomScreen(cpp3ds::Window &window) {
-        // Nothing
     }
 
     bool TitleState::update(float delta) {
