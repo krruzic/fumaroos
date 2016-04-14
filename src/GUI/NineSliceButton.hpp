@@ -1,5 +1,5 @@
-#ifndef GUI3DS_TOGGLEBUTTON_HPP
-#define GUI3DS_TOGGLEBUTTON_HPP
+#ifndef GUI3DS_NINESLICEBUTTON_HPP
+#define GUI3DS_NINESLICEBUTTON_HPP
 
 #include <cpp3ds/Graphics/Text.hpp>
 #include <cpp3ds/Graphics/RectangleShape.hpp>
@@ -8,21 +8,30 @@
 
 namespace gui3ds {
 
-    class ToggleButton : public cpp3ds::Drawable, public util3ds::TweenTransformable {
+    class NineSliceButton : public NinePatch, public util3ds::TweenTransformable {
     public:
         static const int COLOR_RGB = 11;
         static const int COLOR_ALPHA = 12;
-        static const int TEXTCOLOR_ALPHA = 13;
+        static const int CONTENT_X = 13;
+        static const int TEXTCOLOR_ALPHA = 14;
 
-        ToggleButton();
+        NineSliceButton();
 
         bool processEvent(const cpp3ds::Event &event);
-
-        void toggle();
 
         void setTextOffset(const cpp3ds::Vector2f &offset);
 
         const cpp3ds::Vector2f &getTextOffset() const;
+
+        void autoSize();
+
+        void setContentSize(const cpp3ds::Vector2f &size);
+
+        void setContentSize(float width, float height);
+
+        const cpp3ds::Vector2f &getContentSize() const;
+
+        const cpp3ds::Vector2f &getSize() const;
 
         void setString(const cpp3ds::String &string);
 
@@ -38,26 +47,29 @@ namespace gui3ds {
 
         const cpp3ds::Color &getTextActiveColor() const;
 
-        void setTexture(const cpp3ds::Texture &texture);
+        void setColor(const cpp3ds::Color &color);
 
-        void setActiveTexture(const cpp3ds::Texture &texture);
+        const cpp3ds::Color &getColor() const;
 
-        const u_int getTextSize() const;
+        void setActiveColor(const cpp3ds::Color &color);
 
-        void setTextSize(const u_int &size);
+        void setStringSize(const u_int size);
 
-        const cpp3ds::FloatRect getRect() const;
+        const cpp3ds::Color &getActiveColor() const;
 
         void onClick(const std::function<void()> &callback);
 
-        void setPosition(float x, float y);
-
     protected:
+        virtual int getValues(int tweenType, float *returnValues);
+
+        virtual void setValues(int tweenType, float *newValues);
+
         virtual void draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const;
 
-        void ensureUpdate(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const;
+        void ensureUpdate() const;
 
     private:
+        mutable cpp3ds::Vector2f m_size;
         mutable cpp3ds::FloatRect m_rect;
         mutable cpp3ds::Text m_text;
 
@@ -65,15 +77,16 @@ namespace gui3ds {
         cpp3ds::Color m_textColor;
         cpp3ds::Color m_textActiveColor;
 
-        cpp3ds::Sprite m_texture;
-        cpp3ds::Sprite m_activeTexture;
+        cpp3ds::Color m_backgroundColor;
+        cpp3ds::Color m_backgroundActiveColor;
 
         std::function<void()> m_clickFunction;
 
         mutable bool m_needsUpdate;
+        bool m_autoSize;
         bool m_active;
     };
 
 } // namespace gui3ds
 
-#endif // GUI3DS_TOGGLEBUTTON_HPP
+#endif // GUI3DS_NINESLICEBUTTON_HPP

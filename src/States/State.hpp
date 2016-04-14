@@ -5,6 +5,8 @@
 #include <cpp3ds/System/Time.hpp>
 #include <cpp3ds/Window/Event.hpp>
 #include <cpp3ds/System/String.hpp>
+#include <cpp3ds/Window/Window.hpp>
+#include <cpp3ds/System/I18n.hpp>
 #include <memory>
 #include <cpp3ds/Graphics/Color.hpp>
 

@@ -13,8 +13,7 @@
 
 namespace Fumaroos {
 
-    class StateStack : private cpp3ds::NonCopyable
-    {
+    class StateStack : private cpp3ds::NonCopyable {
     public:
         enum Action {
             Push,
@@ -25,16 +24,21 @@ namespace Fumaroos {
     public:
         explicit StateStack(State::Context context);
 
-        template <typename T>
+        template<typename T>
         void registerState(States::ID stateID);
 
         void update(float delta);
-        void renderTopScreen(cpp3ds::Window& window);
-        void renderBottomScreen(cpp3ds::Window& window);
-        void processEvent(const cpp3ds::Event& event);
+
+        void renderTopScreen(cpp3ds::Window &window);
+
+        void renderBottomScreen(cpp3ds::Window &window);
+
+        void processEvent(const cpp3ds::Event &event);
 
         void pushState(States::ID stateID);
+
         void popState();
+
         void clearStates();
 
         bool isEmpty() const;
@@ -42,26 +46,25 @@ namespace Fumaroos {
 
     private:
         State::Ptr createState(States::ID stateID);
-        void       applyPendingChanges();
+
+        void applyPendingChanges();
 
 
     private:
-        struct PendingChange
-        {
+        struct PendingChange {
             explicit PendingChange(Action action, States::ID stateID = States::None);
 
-            Action     action;
+            Action action;
             States::ID stateID;
         };
 
-        struct StateStackItem
-        {
+        struct StateStackItem {
             States::ID id;
             State::Ptr pointer;
         };
 
     private:
-        std::vector<StateStackItem>    m_stack;
+        std::vector<StateStackItem> m_stack;
         std::vector<PendingChange> m_pendingList;
 
         State::Context m_context;
@@ -69,11 +72,9 @@ namespace Fumaroos {
     };
 
 
-    template <typename T>
-    void StateStack::registerState(States::ID stateID)
-    {
-        m_factories[stateID] = [this] ()
-        {
+    template<typename T>
+    void StateStack::registerState(States::ID stateID) {
+        m_factories[stateID] = [this]() {
             return State::Ptr(new T(*this, m_context));
         };
     }

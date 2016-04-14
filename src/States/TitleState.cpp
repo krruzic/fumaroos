@@ -1,9 +1,4 @@
 #include "TitleState.hpp"
-#include <cpp3ds/System/I18n.hpp>
-#include <cpp3ds/Window/Window.hpp>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 
 namespace Fumaroos {
@@ -16,6 +11,19 @@ namespace Fumaroos {
         m_textTitle.setFillColor(cpp3ds::Color::White);
         m_textTitle.setString(_("v0.1"));
         m_textTitle.setPosition(std::floor(398.f - m_textTitle.getLocalBounds().width), 225.f);
+
+        m_buttonTexture.loadFromFile("imgs/start.png");
+        m_activeButtonTexture.loadFromFile("imgs/startP.png");
+        m_buttonTexture.setSmooth(true);
+        m_activeButtonTexture.setSmooth(true);
+
+        m_startButton.setTexture(m_buttonTexture);
+        m_startButton.setPosition(31.f, 88.f);
+
+        m_startButton.onClick([this] {
+            requestStackPop();
+            requestStackPush(States::CreatePet);
+        });
 
         m_text.setCharacterSize(12);
         m_text.setFillColor(cpp3ds::Color::White);
@@ -31,6 +39,7 @@ namespace Fumaroos {
     }
 
     void TitleState::renderBottomScreen(cpp3ds::Window &window) {
+        window.draw(m_startButton);
     }
 
     bool TitleState::update(float delta) {
@@ -45,7 +54,13 @@ namespace Fumaroos {
     }
 
     bool TitleState::processEvent(const cpp3ds::Event &event) {
-        // If any key is pressed, trigger the next screen
+//         If any key is pressed, trigger the next screen
+        m_startButton.processEvent(event);
+        if (m_startButton.getActive()) {
+            m_startButton.setTexture(m_activeButtonTexture);
+        } else {
+            m_startButton.setTexture(m_buttonTexture);
+        }
         if (event.type == cpp3ds::Event::KeyPressed) {
             if (event.key.code == cpp3ds::Keyboard::Select) {
                 requestStackClear();
@@ -53,7 +68,7 @@ namespace Fumaroos {
             }
             requestStackPop();
             if (!checkSave()) {
-                requestStackPush(States::NamePet);
+                requestStackPush(States::CreatePet);
             }
         }
 

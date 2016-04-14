@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 2.8)
 # Project name without spaces or special characters
 project("fumaroos")
 
+# set env vars
+set(ENV{CPP3DS} "/opt/devkitpro/cpp3ds")
+set(ENV{DEVKITPRO} "/opt/devkitpro/")
+set(ENV{DEVKITARM} "/opt/devkitpro/devkitARM")
+
 set(APP_TITLE "Fumaroos")
 set(APP_DESCRIPTION "A pet raising simulation game")
 set(APP_AUTHOR "krruzic")
@@ -40,19 +45,19 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/States/State.cpp
         ${PROJECT_SOURCE_DIR}/src/States/StateStack.cpp
         ${PROJECT_SOURCE_DIR}/src/States/TitleState.cpp
-        ${PROJECT_SOURCE_DIR}/src/States/NamePet.cpp
+        ${PROJECT_SOURCE_DIR}/src/States/CreatePet.cpp
         ${PROJECT_SOURCE_DIR}/src/Keyboard/Keyboard.cpp
         ${PROJECT_SOURCE_DIR}/src/Keyboard/tinyxml2.cpp
-        ${PROJECT_SOURCE_DIR}/src/GUI/Button.cpp
+        ${PROJECT_SOURCE_DIR}/src/GUI/NineSliceButton.cpp
         ${PROJECT_SOURCE_DIR}/src/GUI/NinePatch.cpp
-        ${PROJECT_SOURCE_DIR}/src/GUI/ToggleButton.cpp
+        ${PROJECT_SOURCE_DIR}/src/GUI/Button.cpp
         )
 FILE(GLOB_RECURSE SHADER_FILES ${PROJECT_SOURCE_DIR}/res/romfs/shaders/[^.]*.vsh)
 
 ##################################################
 # Don't usually need to change anything below
 ##################################################
-set(CPP3DS_ARM_FLAGS "-g -O2 -fno-rtti -fno-exceptions -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft")
+set(CPP3DS_ARM_FLAGS "-g -O2 -fno-rtti -fno-exceptions -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft -std=c++11")
 set(CPP3DS_EMU_FLAGS "-g -O0")
 
 set(CPP3DS_ARM_LIBS cpp3ds-window cpp3ds-graphics cpp3ds-audio cpp3ds-network cpp3ds-system citro3d mbedtls mbedx509 mbedcrypto ctru freetype png z vorbisenc vorbisfile vorbis ogg bz2)

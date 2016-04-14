@@ -2,6 +2,7 @@
 #define FUMAROOS_TITLESTATE_HPP
 
 #include "State.hpp"
+#include "../GUI/Button.hpp"
 #include <cpp3ds/Graphics/Sprite.hpp>
 #include <cpp3ds/Graphics/Text.hpp>
 
@@ -26,6 +27,10 @@ namespace Fumaroos {
         cpp3ds::Text m_text;
         cpp3ds::Texture m_titleTexture;
         cpp3ds::Sprite m_titleBackground;
+        cpp3ds::Texture m_buttonTexture;
+        cpp3ds::Texture m_activeButtonTexture;
+        gui3ds::Button m_startButton;
+
         bool m_showText;
         float m_textEffectTime;
     };
