@@ -65,7 +65,7 @@ private:
     bool m_isLooped;
     const cpp3ds::Texture* m_texture;
     cpp3ds::VertexArray m_vertices;
-
+//    cpp3ds::VertexAr m_vertices[6];
     virtual void draw(cpp3ds::RenderTarget& target, cpp3ds::RenderStates states) const;
 
 };

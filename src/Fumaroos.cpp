@@ -37,7 +37,7 @@ namespace Fumaroos {
     }
 
     void Fumaroos::renderBottomScreen(Window &window) {
-        window.clear();
+        window.clear(Color(6, 110, 164));
         m_stateStack.renderBottomScreen(window);
     }
 

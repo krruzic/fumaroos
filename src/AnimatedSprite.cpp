@@ -75,10 +75,9 @@ void AnimatedSprite::setLooped(bool looped)
 void AnimatedSprite::setColor(const cpp3ds::Color& color)
 {
     // Update the vertices' color
-    m_vertices[0].color = color;
-    m_vertices[1].color = color;
-    m_vertices[2].color = color;
-    m_vertices[3].color = color;
+    for (int i = 0; i < m_vertices.getVertexCount(); i++){
+        m_vertices[i].color = color;
+    }
 }
 
 const Animation* AnimatedSprite::getAnimation() const
@@ -120,19 +119,22 @@ void AnimatedSprite::setFrame(std::size_t newFrame, bool resetTime)
 {
     if (m_animation)
     {
-        //calculate new vertex positions and texture coordiantes
+        // calculate new vertex positions and texture coordiantes
         cpp3ds::IntRect rect = m_animation->getFrame(newFrame);
+
         cpp3ds::Vertex vertices[4];
 
-        vertices[0].position = cpp3ds::Vector2f(0.f, 0.f);
-        vertices[1].position = cpp3ds::Vector2f(0.f, static_cast<float>(rect.width));
-        vertices[2].position = cpp3ds::Vector2f(static_cast<float>(rect.height), 0.f);
-        vertices[3].position = cpp3ds::Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height));
 
-        vertices[0].texCoords = cpp3ds::Vector2f(0.f, 0.f);
-        vertices[1].texCoords = cpp3ds::Vector2f(0.f, static_cast<float>(rect.width));
-        vertices[2].texCoords = cpp3ds::Vector2f(static_cast<float>(rect.height), 0.f);
-        vertices[3].texCoords = cpp3ds::Vector2f(static_cast<float>(rect.width), static_cast<float>(rect.height));
+        vertices[0].position = cpp3ds::Vector2f(0.f, rect.top);
+        vertices[1].position = cpp3ds::Vector2f(rect.width, rect.top);
+        vertices[2].position = cpp3ds::Vector2f(0.f, rect.top + rect.height);
+        vertices[3].position = cpp3ds::Vector2f(rect.width,
+                                                rect.top + rect.height);
+
+        vertices[0].texCoords = cpp3ds::Vector2f(rect.left, rect.top);
+        vertices[1].texCoords = cpp3ds::Vector2f(rect.left + rect.width, rect.top);
+        vertices[2].texCoords = cpp3ds::Vector2f(rect.left, rect.top + rect.height);
+        vertices[3].texCoords = cpp3ds::Vector2f(rect.left + rect.width, rect.height);
 
 
         // append vertices as two triangles
@@ -140,7 +142,7 @@ void AnimatedSprite::setFrame(std::size_t newFrame, bool resetTime)
         //  0--1
         //  |  |
         //  2--3
-        //
+        m_vertices.clear();
         m_vertices.append(vertices[0]);
         m_vertices.append(vertices[2]);
         m_vertices.append(vertices[3]);
