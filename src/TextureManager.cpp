@@ -22,13 +22,10 @@ namespace Fumaroos {
     }
 
 
-    // unload unneeded textures, this is called when a function is popped
+    // unload unneeded textures, this is called automatically when a function is popped
     void TextureManager::unloadTextures(const States::ID &group) {
-        for (auto i : textures) {
-            if (i.first == group) {
-                textures.erase(i.first); // removes the entire group
-                break;
-            }
+        if (textures.count(group)) {
+            textures.find(group)->second.clear();
         }
     }
 }
