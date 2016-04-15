@@ -43,6 +43,8 @@ namespace Fumaroos {
 
         bool isEmpty() const;
 
+    public:
+        States::ID getTopID();
 
     private:
         State::Ptr createState(States::ID stateID);

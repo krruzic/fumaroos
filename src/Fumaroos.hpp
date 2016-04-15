@@ -4,6 +4,7 @@
 #include <cpp3ds/Graphics.hpp>
 #include <cpp3ds/Network.hpp>
 #include "States/StateStack.hpp"
+#include "TextureManager.hpp"
 
 namespace Fumaroos {
 
@@ -28,6 +29,7 @@ namespace Fumaroos {
         cpp3ds::String m_name;
         cpp3ds::String m_data;
         cpp3ds::Color m_color;
+        TextureManager m_texmgr;
     };
 
 }

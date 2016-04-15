@@ -4,6 +4,7 @@
 #include "State.hpp"
 #include "../GUI/Button.hpp"
 #include "../GUI/NineSliceButton.hpp"
+#include "../AnimatedSprite.hpp"
 #include <cpp3ds/Graphics/Sprite.hpp>
 #include <cpp3ds/Graphics/Text.hpp>
 #include <sstream>
@@ -26,16 +27,16 @@ namespace Fumaroos {
 
     private:
         cpp3ds::Text m_text;
-        cpp3ds::Texture m_test;
-        cpp3ds::Sprite m_spritetest;
-        cpp3ds::Texture m_sexButtonTexture;
-        cpp3ds::Texture m_sexButtonActiveTexture;
-        cpp3ds::Texture m_backButtonTexture;
-        cpp3ds::Texture m_backButtonActiveTexture;
+
+
         gui3ds::Button m_sexToggle;
         gui3ds::Button m_backButton;
-        cpp3ds::Texture m_bg_texture;
+
         cpp3ds::Sprite m_bg;
+
+        Animation m_moldAnim;
+//        m_moldAnim = new Animation;
+        AnimatedSprite m_moldSprite;
 
     };
 

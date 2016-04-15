@@ -4,11 +4,11 @@
 namespace Fumaroos {
 	namespace States {
 		enum ID {
-			None,
-			Title,
-			Menu,
-			CreatePet,
-			Play,
+			None = 0,
+			Title = 1,
+			Menu = 2,
+			CreatePet = 3,
+			Play = 4,
 		};
 	}
 }

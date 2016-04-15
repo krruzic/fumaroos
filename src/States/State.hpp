@@ -2,6 +2,7 @@
 #define FUMAROOS_STATE_HPP
 
 #include "StateIdentifiers.hpp"
+#include "../TextureManager.hpp"
 #include <cpp3ds/System/Time.hpp>
 #include <cpp3ds/Window/Event.hpp>
 #include <cpp3ds/System/String.hpp>
@@ -34,11 +35,13 @@ namespace Fumaroos {
 
         struct Context {
             Context(cpp3ds::String &name, cpp3ds::String &data,
-                    cpp3ds::Color &color);
+                    cpp3ds::Color &color, TextureManager &texmgr);
 
             cpp3ds::String &name;
             cpp3ds::String &data;
             cpp3ds::Color &color;
+
+            TextureManager &texmgr;
         };
 
         State(StateStack &stack, Context &context);
@@ -53,10 +56,11 @@ namespace Fumaroos {
 
         virtual bool processEvent(const cpp3ds::Event &event) = 0;
 
+
     protected:
         void requestStackPush(States::ID stateID);
 
-        void requestStackPop(States::ID stateID = States::None);
+        void requestStackPop();
 
         void requestStackClear();
 

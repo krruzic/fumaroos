@@ -5,20 +5,20 @@ namespace Fumaroos {
 
     TitleState::TitleState(StateStack &stack, Context &context)
             : State(stack, context), m_text(), m_showText(true), m_textEffectTime(0) {
-        m_titleTexture.loadFromFile("imgs/title2.png");
-        m_titleBackground.setTexture(m_titleTexture);
+        context.texmgr.loadTexture(States::Title, "title", "imgs/title2.png");
+        context.texmgr.loadTexture(States::Title, "start", "imgs/start.png");
+        context.texmgr.loadTexture(States::Title, "startP", "imgs/startP.png");
+
+        m_titleBackground.setTexture(context.texmgr.getRef(States::Title, "title"));
         m_textTitle.setCharacterSize(10);
         m_textTitle.setFillColor(cpp3ds::Color::White);
         m_textTitle.setString(_("v0.1"));
         m_textTitle.setPosition(std::floor(398.f - m_textTitle.getLocalBounds().width), 225.f);
 
-        m_buttonTexture.loadFromFile("imgs/start.png");
-        m_activeButtonTexture.loadFromFile("imgs/startP.png");
-        m_buttonTexture.setSmooth(true);
-        m_activeButtonTexture.setSmooth(true);
-
-        m_startButton.setTexture(m_buttonTexture);
+        m_startButton.setTexture(context.texmgr.getRef(States::Title, "start"));
+        m_startButton.setActiveTexture(context.texmgr.getRef(States::Title, "startP"));
         m_startButton.setPosition(31.f, 88.f);
+//        m_startButton.setTextureRect(cpp3ds::IntRect(10, 10, 16, 16));
 
         m_startButton.onClick([this] {
             requestStackPop();
@@ -56,24 +56,20 @@ namespace Fumaroos {
     bool TitleState::processEvent(const cpp3ds::Event &event) {
 //         If any key is pressed, trigger the next screen
         m_startButton.processEvent(event);
-        if (m_startButton.getActive()) {
-            m_startButton.setTexture(m_activeButtonTexture);
-        } else {
-            m_startButton.setTexture(m_buttonTexture);
-        }
-        if (event.type == cpp3ds::Event::KeyPressed) {
-            if (event.key.code == cpp3ds::Keyboard::Select) {
-                requestStackClear();
-                return true;
-            }
-            requestStackPop();
-            if (!checkSave()) {
-                requestStackPush(States::CreatePet);
-            }
-        }
+//        if (event.type == cpp3ds::Event::KeyPressed) {
+//            if (event.key.code == cpp3ds::Keyboard::Select) {
+//                requestStackClear();
+//                return true;
+//            }
+//            requestStackPop();
+//            if (!checkSave()) {
+//                requestStackPush(States::CreatePet);
+//            }
+//        }
 
         return true;
     }
+
 
     bool TitleState::checkSave() {
 

@@ -48,6 +48,11 @@ namespace Fumaroos {
         m_pendingList.push_back(PendingChange(Pop));
     }
 
+    States::ID StateStack::getTopID() {
+        return m_stack.back().id;
+    }
+
+
     void StateStack::clearStates() {
         m_pendingList.push_back(PendingChange(Clear));
     }

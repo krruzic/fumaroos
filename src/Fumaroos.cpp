@@ -7,7 +7,7 @@ namespace Fumaroos {
 
     Fumaroos::Fumaroos()
             : m_color(cpp3ds::Color::Black),
-              m_stateStack(State::Context(m_name, m_data, m_color)) {
+              m_stateStack(State::Context(m_name, m_data, m_color, m_texmgr)) {
         m_stateStack.registerState<TitleState>(States::Title);
         m_stateStack.registerState<CreatePet>(States::CreatePet);
 

@@ -41,7 +41,10 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/TweenTransformable.cpp
         ${PROJECT_SOURCE_DIR}/src/main.cpp
         ${PROJECT_SOURCE_DIR}/src/Fumaroos.cpp
+        ${PROJECT_SOURCE_DIR}/src/TextureManager.cpp
         ${PROJECT_SOURCE_DIR}/src/Pet.cpp
+        ${PROJECT_SOURCE_DIR}/src/Animation.cpp
+        ${PROJECT_SOURCE_DIR}/src/AnimatedSprite.cpp
         ${PROJECT_SOURCE_DIR}/src/States/State.cpp
         ${PROJECT_SOURCE_DIR}/src/States/StateStack.cpp
         ${PROJECT_SOURCE_DIR}/src/States/TitleState.cpp

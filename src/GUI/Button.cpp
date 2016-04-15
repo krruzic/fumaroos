@@ -19,10 +19,17 @@ namespace gui3ds {
     }
 
 
-//    void Button::setPosition(float x, float y) {
-//        m_texture.setPosition(x, y);
-//        cpp3ds::Transformable::setPosition(x, y);
-//    }
+    void Button::setActiveTexture(const cpp3ds::Texture &texture) {
+        m_activeTexture.setTexture(texture);
+        m_needsUpdate = true;
+    }
+
+
+    void Button::setPosition(float x, float y) {
+        m_texture.setPosition(x, y);
+        m_activeTexture.setPosition(x, y);
+        cpp3ds::Transformable::setPosition(x, y);
+    }
 
     bool Button::getActive() {
         return m_active;
@@ -72,12 +79,12 @@ namespace gui3ds {
 
     void Button::ensureUpdate(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const {
         if (m_needsUpdate) {
-            target.draw(m_texture, states);
-//            if (m_active) {
-//                target.draw(m_activeTexture, states);
-//            } else {
-//                target.draw(m_texture, states);
-//            }
+//            target.draw(m_texture, states);
+            if (m_active) {
+                target.draw(m_activeTexture, states);
+            } else {
+                target.draw(m_texture, states);
+            }
         }
     };
 

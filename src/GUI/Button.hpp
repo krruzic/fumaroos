@@ -30,7 +30,7 @@ namespace gui3ds {
         void onClick(const std::function<void()> &callback);
 
 
-//        void setPosition(float x, float y);
+        void setPosition(float x, float y);
 
     protected:
         virtual void draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const;
@@ -39,11 +39,12 @@ namespace gui3ds {
 
     private:
         cpp3ds::Sprite m_texture;
+        cpp3ds::Sprite m_activeTexture;
 
         std::function<void()> m_clickFunction;
 
         mutable bool m_needsUpdate;
-        bool m_touched;
+        bool m_touched = false;
         bool m_active;
     };
 
