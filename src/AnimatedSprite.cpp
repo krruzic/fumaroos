@@ -24,70 +24,59 @@
 // altered from here: https://github.com/SFML/SFML/wiki/Source:-AnimatedSprite
 #include "AnimatedSprite.hpp"
 
-AnimatedSprite::AnimatedSprite(float frameTime, bool paused, bool looped) :
-    m_animation(NULL), m_frameTime(frameTime), m_currentFrame(0), m_isPaused(paused), m_isLooped(looped), m_texture(NULL)
-{
+AnimatedSprite::AnimatedSprite(float frameTime, bool paused, bool looped, std::string name) :
+        m_spriteManager(NULL), m_frameTime(frameTime), m_currentFrame(0), m_isPaused(paused), m_isLooped(looped),
+        m_name(name) {
 
 }
 
-void AnimatedSprite::setAnimation(const Animation& animation)
-{
-    m_animation = &animation;
-    m_texture = m_animation->getSpriteSheet();
+
+void AnimatedSprite::setSpriteManager(const SpriteManager &spriteManager) {
+    m_spriteManager = &spriteManager;
+    m_sprite.setTexture(spriteManager.getSpriteSheet());
+    m_sprite.setTextureRect(m_spriteManager->getAnimSize(this->m_name));
     m_currentFrame = 0;
     setFrame(m_currentFrame);
 }
 
-void AnimatedSprite::setFrameTime(float time)
-{
+void AnimatedSprite::setFrameTime(float time) {
     m_frameTime = time;
 }
 
-void AnimatedSprite::play()
-{
+void AnimatedSprite::play() {
     m_isPaused = false;
 }
 
-void AnimatedSprite::play(const Animation& animation)
-{
-    if (getAnimation() != &animation)
-        setAnimation(animation);
+void AnimatedSprite::play(const SpriteManager &spriteManager) {
+    if (getSpriteManager() != &spriteManager)
+        setSpriteManager(spriteManager);
     play();
 }
 
-void AnimatedSprite::pause()
-{
+void AnimatedSprite::pause() {
     m_isPaused = true;
 }
 
-void AnimatedSprite::stop()
-{
+void AnimatedSprite::stop() {
     m_isPaused = true;
     m_currentFrame = 0;
     setFrame(m_currentFrame);
 }
 
-void AnimatedSprite::setLooped(bool looped)
-{
+void AnimatedSprite::setLooped(bool looped) {
     m_isLooped = looped;
 }
 
-void AnimatedSprite::setColor(const cpp3ds::Color& color)
-{
-    // Update the vertices' color
-    for (int i = 0; i < m_vertices.getVertexCount(); i++){
-        m_vertices[i].color = color;
-    }
+void AnimatedSprite::setColor(const cpp3ds::Color &color) {
+    m_sprite.setColor(color);
 }
 
-const Animation* AnimatedSprite::getAnimation() const
-{
-    return m_animation;
+const SpriteManager *AnimatedSprite::getSpriteManager() const {
+    return m_spriteManager;
 }
 
-cpp3ds::FloatRect AnimatedSprite::getLocalBounds() const
-{
-    cpp3ds::IntRect rect = m_animation->getFrame(m_currentFrame);
+cpp3ds::FloatRect AnimatedSprite::getLocalBounds() const {
+    cpp3ds::IntRect rect = m_spriteManager->getFrame(this->m_name, m_currentFrame);
 
     float width = static_cast<float>(std::abs(rect.width));
     float height = static_cast<float>(std::abs(rect.height));
@@ -95,90 +84,50 @@ cpp3ds::FloatRect AnimatedSprite::getLocalBounds() const
     return cpp3ds::FloatRect(0.f, 0.f, width, height);
 }
 
-cpp3ds::FloatRect AnimatedSprite::getGlobalBounds() const
-{
+cpp3ds::FloatRect AnimatedSprite::getGlobalBounds() const {
     return getTransform().transformRect(getLocalBounds());
 }
 
-bool AnimatedSprite::isLooped() const
-{
+bool AnimatedSprite::isLooped() const {
     return m_isLooped;
 }
 
-bool AnimatedSprite::isPlaying() const
-{
+bool AnimatedSprite::isPlaying() const {
     return !m_isPaused;
 }
 
-float AnimatedSprite::getFrameTime() const
-{
+float AnimatedSprite::getFrameTime() const {
     return m_frameTime;
 }
 
-void AnimatedSprite::setFrame(std::size_t newFrame, bool resetTime)
-{
-    if (m_animation)
-    {
-        // calculate new vertex positions and texture coordiantes
-        cpp3ds::IntRect rect = m_animation->getFrame(newFrame);
-
-        cpp3ds::Vertex vertices[4];
-
-
-        vertices[0].position = cpp3ds::Vector2f(0.f, rect.top);
-        vertices[1].position = cpp3ds::Vector2f(rect.width, rect.top);
-        vertices[2].position = cpp3ds::Vector2f(0.f, rect.top + rect.height);
-        vertices[3].position = cpp3ds::Vector2f(rect.width,
-                                                rect.top + rect.height);
-
-        vertices[0].texCoords = cpp3ds::Vector2f(rect.left, rect.top);
-        vertices[1].texCoords = cpp3ds::Vector2f(rect.left + rect.width, rect.top);
-        vertices[2].texCoords = cpp3ds::Vector2f(rect.left, rect.top + rect.height);
-        vertices[3].texCoords = cpp3ds::Vector2f(rect.left + rect.width, rect.height);
-
-
-        // append vertices as two triangles
-        //
-        //  0--1
-        //  |  |
-        //  2--3
-        m_vertices.clear();
-        m_vertices.append(vertices[0]);
-        m_vertices.append(vertices[2]);
-        m_vertices.append(vertices[3]);
-        m_vertices.append(vertices[1]);
-        m_vertices.append(vertices[0]);
-        m_vertices.append(vertices[3]);
-    }
+void AnimatedSprite::setFrame(std::size_t newFrame, bool resetTime) {
+    cpp3ds::IntRect rect = m_spriteManager->getFrame(this->m_name, newFrame);
+    m_vertices.clear();
+    m_sprite.setTextureRect(rect);
 
     if (resetTime)
         m_currentTime = 0.f;
 }
 
-void AnimatedSprite::update(float deltaTime)
-{
-    // if not paused and we have a valid animation
-    if (!m_isPaused && m_animation)
-    {
+void AnimatedSprite::update(float deltaTime) {
+    // if not paused and we have a valid spriteManager
+    if (!m_isPaused && m_spriteManager) {
         // add delta time
         m_currentTime += deltaTime;
 
         // if current time is bigger then the frame time advance one frame
-        if (m_currentTime >= m_frameTime)
-        {
+        if (m_currentTime >= m_frameTime) {
             // reset time, but keep the remainder
             m_currentTime = (float) fmod(m_currentTime, m_frameTime);
 
             // get next Frame index
-            if (m_currentFrame + 1 < m_animation->getSize())
+            if (m_currentFrame + 1 < m_spriteManager->getSize(this->m_name))
                 m_currentFrame++;
-            else
-            {
-                // animation has ended
+            else {
+                // spriteManager has ended
                 m_currentFrame = 0; // reset to start
 
-                if (!m_isLooped)
-                {
+                if (!m_isLooped) {
                     m_isPaused = true;
                 }
 
@@ -190,12 +139,9 @@ void AnimatedSprite::update(float deltaTime)
     }
 }
 
-void AnimatedSprite::draw(cpp3ds::RenderTarget& target, cpp3ds::RenderStates states) const
-{
-    if (m_animation && m_texture)
-    {
+void AnimatedSprite::draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const {
+    if (m_spriteManager) {
         states.transform *= getTransform();
-        states.texture = m_texture;
-        target.draw(m_vertices, states);
+        target.draw(m_sprite, states);
     }
 }

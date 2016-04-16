@@ -31,42 +31,61 @@
 #include <cpp3ds/Graphics/Transformable.hpp>
 #include <cpp3ds/Graphics/VertexArray.hpp>
 #include <cpp3ds/System/Vector2.hpp>
+#include <cpp3ds/Graphics/Sprite.hpp>
 
-#include "Animation.hpp"
+#include "Management/SpriteManager.hpp"
 
-class AnimatedSprite : public cpp3ds::Drawable, public cpp3ds::Transformable
-{
+class AnimatedSprite : public cpp3ds::Drawable, public cpp3ds::Transformable {
 public:
-    explicit AnimatedSprite(float frameTime = 0.2f, bool paused = false, bool looped = true);
+    AnimatedSprite(float frameTime = 0.2f, bool paused = false, bool looped = true, std::string name = "default");
 
     void update(float deltaTime);
-    void setAnimation(const Animation& animation);
+
+
+    void setSpriteManager(const SpriteManager &spriteManager);
+
     void setFrameTime(float time);
+
     void play();
-    void play(const Animation& animation);
+
+    void play(const SpriteManager &spriteManager);
+
     void pause();
+
     void stop();
+
     void setLooped(bool looped);
-    void setColor(const cpp3ds::Color& color);
-    const Animation* getAnimation() const;
+
+    void setColor(const cpp3ds::Color &color);
+
+    const SpriteManager *getSpriteManager() const;
+
     cpp3ds::FloatRect getLocalBounds() const;
+
     cpp3ds::FloatRect getGlobalBounds() const;
+
     bool isLooped() const;
+
     bool isPlaying() const;
+
     float getFrameTime() const;
+
     void setFrame(std::size_t newFrame, bool resetTime = true);
 
 private:
-    const Animation* m_animation;
+    const SpriteManager *m_spriteManager;
     float m_frameTime;
     float m_currentTime;
     std::size_t m_currentFrame;
     bool m_isPaused;
     bool m_isLooped;
-    const cpp3ds::Texture* m_texture;
+    cpp3ds::Sprite m_sprite;
     cpp3ds::VertexArray m_vertices;
-//    cpp3ds::VertexAr m_vertices[6];
-    virtual void draw(cpp3ds::RenderTarget& target, cpp3ds::RenderStates states) const;
+//    bool m_color;
+
+    std::string m_name;
+
+    virtual void draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const;
 
 };
 

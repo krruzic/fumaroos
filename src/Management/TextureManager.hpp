@@ -2,7 +2,7 @@
 #define TEXTUREMANAGER_HPP
 
 #include <cpp3ds/Graphics.hpp>
-#include "States/StateIdentifiers.hpp"
+#include "../States/StateIdentifiers.hpp"
 #include <string>
 #include <map>
 

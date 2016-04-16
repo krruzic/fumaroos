@@ -22,27 +22,33 @@
 ////////////////////////////////////////////////////////////
 
 // altered from here: https://github.com/SFML/SFML/wiki/Source:-AnimatedSprite
-#ifndef ANIMATION_HPP
-#define ANIMATION_HPP
+#ifndef SPRITEMANAGER_HPP
+#define SPRITEMANAGER_HPP
 
 #include <vector>
 #include <cpp3ds/Graphics/Rect.hpp>
 #include <cpp3ds/Graphics/Texture.hpp>
+#include <map>
 
-class Animation
-{
+class SpriteManager {
 public:
-    Animation();
+    SpriteManager();
 
-    void addFrame(cpp3ds::IntRect rect);
-    void setSpriteSheet(const cpp3ds::Texture& texture);
-    const cpp3ds::Texture* getSpriteSheet() const;
-    std::size_t getSize() const;
-    const cpp3ds::IntRect& getFrame(std::size_t n) const;
+    void addFrames(const std::string name, cpp3ds::IntRect rect, int frames, int animHeight);
+
+    void setSpriteSheet(const cpp3ds::Texture &texture);
+
+    const cpp3ds::Texture &getSpriteSheet() const;
+
+    std::size_t getSize(std::string name) const;
+
+    cpp3ds::IntRect getAnimSize(std::string name) const;
+
+    const cpp3ds::IntRect &getFrame(std::string name, std::size_t n) const;
 
 private:
-    std::vector<cpp3ds::IntRect> m_frames;
-    const cpp3ds::Texture* m_texture;
+    std::map<std::string, std::vector<cpp3ds::IntRect>> m_frames;
+    cpp3ds::Texture m_texture;
 };
 
-#endif // ANIMATION_HPP
+#endif // SPRITEMANAGER_HPP

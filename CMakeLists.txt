@@ -38,12 +38,12 @@ include_directories(
 FILE(GLOB_RECURSE TWEEN_ENGINE_SOURCE ${PROJECT_SOURCE_DIR}/external/tween-engine/src/*.cpp)
 set(SOURCE_FILES
         ${TWEEN_ENGINE_SOURCE}
+        ${PROJECT_SOURCE_DIR}/src/Management/TextureManager.cpp
+        ${PROJECT_SOURCE_DIR}/src/Management/SpriteManager.cpp
         ${PROJECT_SOURCE_DIR}/src/TweenTransformable.cpp
         ${PROJECT_SOURCE_DIR}/src/main.cpp
         ${PROJECT_SOURCE_DIR}/src/Fumaroos.cpp
-        ${PROJECT_SOURCE_DIR}/src/TextureManager.cpp
         ${PROJECT_SOURCE_DIR}/src/Pet.cpp
-        ${PROJECT_SOURCE_DIR}/src/Animation.cpp
         ${PROJECT_SOURCE_DIR}/src/AnimatedSprite.cpp
         ${PROJECT_SOURCE_DIR}/src/States/State.cpp
         ${PROJECT_SOURCE_DIR}/src/States/StateStack.cpp
