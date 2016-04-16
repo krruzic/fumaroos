@@ -24,15 +24,8 @@ namespace Fumaroos {
 
     private:
         cpp3ds::Text m_textTitle;
-        cpp3ds::Text m_text;
-        cpp3ds::Texture m_titleTexture;
         cpp3ds::Sprite m_titleBackground;
-        cpp3ds::Texture m_buttonTexture;
-        cpp3ds::Texture m_activeButtonTexture;
         gui3ds::Button m_startButton;
-
-        bool m_showText;
-        float m_textEffectTime;
     };
 
 } // namespace Fumaroos

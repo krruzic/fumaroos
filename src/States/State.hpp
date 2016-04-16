@@ -2,7 +2,7 @@
 #define FUMAROOS_STATE_HPP
 
 #include "StateIdentifiers.hpp"
-#include "../TextureManager.hpp"
+#include "../Management/TextureManager.hpp"
 #include <cpp3ds/System/Time.hpp>
 #include <cpp3ds/Window/Event.hpp>
 #include <cpp3ds/System/String.hpp>

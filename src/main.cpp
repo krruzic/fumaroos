@@ -5,7 +5,8 @@
 using namespace cpp3ds;
 
 int main(int argc, char** argv) {
-//    Console::initialize();
+    Console::enable(TopScreen);
+    std::cout << "TESTING";
     if (!Service::enable(Network))
         std::cout << "SERVICE FAILURE!" << std::endl;
     Fumaroos::Fumaroos game;

@@ -1,61 +1,74 @@
 #include "CreatePet.hpp"
-
+#include <cpp3ds/Graphics.hpp>
 namespace Fumaroos {
     CreatePet::CreatePet(StateStack &stack, Context &context)
             : State(stack, context) {
-        context.texmgr.loadTexture(States::CreatePet, "back", "imgs/back.png");
-        context.texmgr.loadTexture(States::CreatePet, "backT", "imgs/backT.png");
-        context.texmgr.loadTexture(States::CreatePet, "femaleT", "imgs/femaleT.png");
-        context.texmgr.loadTexture(States::CreatePet, "maleT", "imgs/maleT.png");
-        context.texmgr.loadTexture(States::None, "bg", "imgs/bg.png");
-        context.texmgr.loadTexture(States::CreatePet, "mold", "sprites/mold.png");
 
-        m_bg.setTexture(context.texmgr.getRef(States::None, "bg"));
+        TextureManager *texmgr = &context.texmgr; // save some typing
+        texmgr->loadTexture(States::CreatePet, "back", "imgs/back.png");
+        texmgr->loadTexture(States::CreatePet, "backT", "imgs/backT.png");
+        texmgr->loadTexture(States::CreatePet, "femaleT", "imgs/femaleT.png");
+        texmgr->loadTexture(States::CreatePet, "maleT", "imgs/maleT.png");
+        texmgr->loadTexture(States::CreatePet, "spritesheet", "sprites/ss.png");
+
+        m_animSpriteSheet.setSpriteSheet(texmgr->getRef(States::CreatePet, "spritesheet"));
 
         m_text.setString(_("Create your Pet"));
-        m_text.setCharacterSize(20);
-        m_text.setPosition(std::round(160.f - m_text.getLocalBounds().width / 2.f), 2.f);
+        m_text.setOutlineColor(cpp3ds::Color::Black);
+        m_text.setOutlineThickness(1.f);
+        m_text.setCharacterSize(24);
+        m_text.setPosition(std::round(160.f - m_text.getLocalBounds().width / 2.f) - 10.f, 2.f);
 
-        m_backButton.setTexture(context.texmgr.getRef(States::CreatePet, "back"));
-        m_backButton.setActiveTexture(context.texmgr.getRef(States::CreatePet, "backT"));
+        m_backButton.setTexture(texmgr->getRef(States::CreatePet, "back"));
+        m_backButton.setActiveTexture(texmgr->getRef(States::CreatePet, "backT"));
         m_backButton.setPosition(6.f, 2.f);
+
+
+        m_animSpriteSheet.addFrames("shadow", cpp3ds::IntRect(0, 64, 128, 64), 2, 64);
+
+        m_shadowSprite = AnimatedSprite(0.4f, false, true, "shadow");
+        m_shadowSprite.setPosition(64.f, 76.f);
+        m_shadowSprite.play(m_animSpriteSheet);
+
+
+        m_animSpriteSheet.addFrames("mold", cpp3ds::IntRect(0, 0, 192, 64), 4, 64);
+
+        m_moldSprite = AnimatedSprite(0.4f, false, true, "mold");
+        m_moldSprite.setPosition(64.f, 64.f);
+        m_moldSprite.play(m_animSpriteSheet);
+
         m_backButton.onClick([this] {
             requestStackPop();
             requestStackPush(States::Title);
         });
+        m_sexToggle.onClick([this] {
+            if (!m_sexToggle.getActive()) {
+                m_moldSprite.setColor(cpp3ds::Color::Magenta);
+            } else {
+                m_moldSprite.setColor(cpp3ds::Color::Green);
+            }
+        });
 
-        m_sexToggle.setTexture(context.texmgr.getRef(States::CreatePet, "femaleT"));
-        m_sexToggle.setActiveTexture(context.texmgr.getRef(States::CreatePet, "maleT"));
-        m_sexToggle.setPosition(320.f - context.texmgr.getRef(States::CreatePet, "femaleT").getSize().x - 6.f, 2.f);
-
-        m_moldAnim.setSpriteSheet(context.texmgr.getRef(States::CreatePet, "mold"));
-        m_moldAnim.addFrame(cpp3ds::IntRect(0, 0, 32, 32));
-//        m_moldAnim.addFrame(cpp3ds::IntRect( 32, 32, 32, 32));
-//        m_moldAnim.addFrame(cpp3ds::IntRect(64, 0, 64, 64));
-        m_moldSprite = AnimatedSprite(0.2f, true, false);
-//
-        m_moldSprite.setPosition(50.f, 50.f);
-////        m_moldSprite.setColor(cpp3ds::Color::Magenta);
-//
-        m_moldSprite.play(m_moldAnim);
+        m_sexToggle.setTexture(texmgr->getRef(States::CreatePet, "maleT"));
+        m_sexToggle.setActiveTexture(texmgr->getRef(States::CreatePet, "femaleT"));
+        m_sexToggle.setPosition(320.f - texmgr->getRef(States::CreatePet, "femaleT").getSize().x - 6.f, 2.f);
     }
 
     void CreatePet::renderTopScreen(cpp3ds::Window &window) {
     }
 
     void CreatePet::renderBottomScreen(cpp3ds::Window &window) {
-        window.draw(m_bg);
         window.draw(m_text);
         window.draw(m_backButton);
         window.draw(m_sexToggle);
+        window.draw(m_shadowSprite);
         window.draw(m_moldSprite);
-//        window.draw(m_keyboard);
     }
 
     bool CreatePet::update(float delta) {
-//        m_sexToggle.update(delta);
-//        if (delta >= 0.2f)
         m_moldSprite.update(delta);
+        m_shadowSprite.update(delta);
+
         return true;
     }
 
@@ -66,8 +79,9 @@ namespace Fumaroos {
                 return true;
             }
         }
-        m_sexToggle.processEvent(event);
         m_backButton.processEvent(event);
+        m_sexToggle.processEvent(event);
+
         return false;
     }
 

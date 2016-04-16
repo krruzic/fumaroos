@@ -32,11 +32,12 @@ namespace Fumaroos {
         gui3ds::Button m_sexToggle;
         gui3ds::Button m_backButton;
 
-        cpp3ds::Sprite m_bg;
+//        Animation m_moldAnim;
+        SpriteManager m_animSpriteSheet;
 
-        Animation m_moldAnim;
-//        m_moldAnim = new Animation;
         AnimatedSprite m_moldSprite;
+
+        AnimatedSprite m_shadowSprite;
 
     };
 

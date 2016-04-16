@@ -31,7 +31,7 @@ namespace Fumaroos {
     }
 
     void Fumaroos::renderTopScreen(Window &window) {
-        window.clear(Color::White);
+        window.clear(Color::Black);
         m_stateStack.renderTopScreen(window);
         window.setView(window.getDefaultView());
     }

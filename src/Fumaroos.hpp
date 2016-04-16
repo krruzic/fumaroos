@@ -4,7 +4,7 @@
 #include <cpp3ds/Graphics.hpp>
 #include <cpp3ds/Network.hpp>
 #include "States/StateStack.hpp"
-#include "TextureManager.hpp"
+#include "Management/TextureManager.hpp"
 
 namespace Fumaroos {
 
