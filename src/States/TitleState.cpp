@@ -45,16 +45,16 @@ namespace Fumaroos {
     bool TitleState::processEvent(const cpp3ds::Event &event) {
 //         If any key is pressed, trigger the next screen
         m_startButton.processEvent(event);
-//        if (event.type == cpp3ds::Event::KeyPressed) {
-//            if (event.key.code == cpp3ds::Keyboard::Select) {
-//                requestStackClear();
-//                return true;
-//            }
+        if (event.type == cpp3ds::Event::KeyPressed) {
+            if (event.key.code == cpp3ds::Keyboard::Select) {
+                requestStackClear();
+                return true;
+            }
 //            requestStackPop();
 //            if (!checkSave()) {
 //                requestStackPush(States::CreatePet);
 //            }
-//        }
+        }
 
         return true;
     }

@@ -27,6 +27,7 @@ namespace Fumaroos {
         /* Constructor */
         TextureManager() {
         }
+
     };
 }
 #endif /* TEXTUREMANAGER_HPP */

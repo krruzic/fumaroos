@@ -32,6 +32,7 @@
 #include <cpp3ds/Graphics/VertexArray.hpp>
 #include <cpp3ds/System/Vector2.hpp>
 #include <cpp3ds/Graphics/Sprite.hpp>
+#include <cpp3ds/Window/Event.hpp>
 
 #include "Management/SpriteManager.hpp"
 
@@ -58,7 +59,7 @@ public:
 
     void setColor(const cpp3ds::Color &color);
 
-    const SpriteManager *getSpriteManager() const;
+    const SpriteManager *getSpriteSheet() const;
 
     cpp3ds::FloatRect getLocalBounds() const;
 
@@ -70,17 +71,18 @@ public:
 
     float getFrameTime() const;
 
+    bool processEvent(const cpp3ds::Event &event);
+
     void setFrame(std::size_t newFrame, bool resetTime = true);
 
 private:
-    const SpriteManager *m_spriteManager;
+    const SpriteManager *m_spriteSheet;
     float m_frameTime;
     float m_currentTime;
     std::size_t m_currentFrame;
     bool m_isPaused;
     bool m_isLooped;
     cpp3ds::Sprite m_sprite;
-    cpp3ds::VertexArray m_vertices;
 //    bool m_color;
 
     std::string m_name;

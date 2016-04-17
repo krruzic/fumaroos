@@ -36,9 +36,12 @@ public:
 
     void addFrames(const std::string name, cpp3ds::IntRect rect, int frames, int animHeight);
 
+
+    cpp3ds::Sprite getSprite(cpp3ds::IntRect rect);
+
     void setSpriteSheet(const cpp3ds::Texture &texture);
 
-    const cpp3ds::Texture &getSpriteSheet() const;
+    const cpp3ds::Texture *getSpriteSheet() const;
 
     std::size_t getSize(std::string name) const;
 
@@ -48,7 +51,7 @@ public:
 
 private:
     std::map<std::string, std::vector<cpp3ds::IntRect>> m_frames;
-    cpp3ds::Texture m_texture;
+    const cpp3ds::Texture *m_texture;
 };
 
 #endif // SPRITEMANAGER_HPP

@@ -4,6 +4,7 @@
 
 namespace Fumaroos {
 
+
     State::Context::Context(cpp3ds::String &name, cpp3ds::String &data,
                             cpp3ds::Color &color, TextureManager &texmgr)
             : name(name), data(data), color(color), texmgr(texmgr) {
@@ -12,6 +13,10 @@ namespace Fumaroos {
     State::State(StateStack &stack, Context &context)
             : m_stack(&stack), m_context(context) {
     }
+
+//    State::State(StateStack &stack, Context &context, Pet *pet) : m_stack(&stack), m_context(context), m_pet(pet) {
+//
+//    }
 
     State::~State() {
     }

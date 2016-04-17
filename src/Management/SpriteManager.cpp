@@ -1,27 +1,5 @@
-////////////////////////////////////////////////////////////
-//
-// Copyright (C) 2014 Maximilian Wagenbach (aka. Foaly) (foaly.f@web.de)
-//
-// This software is provided 'as-is', without any express or implied warranty.
-// In no event will the authors be held liable for any damages arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it freely,
-// subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented;
-// you must not claim that you wrote the original software.
-// If you use this software in a product, an acknowledgment
-// in the product documentation would be appreciated but is not required.
-//
-// 2. Altered source versions must be plainly marked as such,
-// and must not be misrepresented as being the original software.
-//
-// 3. This notice may not be removed or altered from any source distribution.
-//
-////////////////////////////////////////////////////////////
-
 // altered from here: https://github.com/SFML/SFML/wiki/Source:-AnimatedSprite
+#include <cpp3ds/Graphics/Sprite.hpp>
 #include "SpriteManager.hpp"
 
 SpriteManager::SpriteManager() {
@@ -31,8 +9,10 @@ SpriteManager::SpriteManager() {
 void SpriteManager::addFrames(const std::string name, cpp3ds::IntRect rect, int frames, int animHeight) {
     int v_frames = static_cast<int>(rect.height) / animHeight;
     int frame_height = static_cast<int>(rect.height) / v_frames;
+
     cpp3ds::IntRect temp_rect;
     m_frames[name].insert(m_frames[name].begin(), rect); // save the full rect in the first element
+
     for (int y = 0; y < v_frames; y++) {
         for (int x = 0; x < frames; x++) {
             temp_rect = cpp3ds::IntRect(rect.left + (x * frame_height), rect.top + (y * frame_height), frame_height,
@@ -43,11 +23,18 @@ void SpriteManager::addFrames(const std::string name, cpp3ds::IntRect rect, int 
 
 }
 
-void SpriteManager::setSpriteSheet(const cpp3ds::Texture &texture) {
-    m_texture = texture;
+// return the sprite that is inside the rect passed
+cpp3ds::Sprite SpriteManager::getSprite(cpp3ds::IntRect rect) {
+    cpp3ds::Sprite temp;
+    temp.setTextureRect(rect);
+    return temp;
 }
 
-const cpp3ds::Texture &SpriteManager::getSpriteSheet() const {
+void SpriteManager::setSpriteSheet(const cpp3ds::Texture &texture) {
+    m_texture = &texture;
+}
+
+const cpp3ds::Texture *SpriteManager::getSpriteSheet() const {
     return m_texture;
 }
 

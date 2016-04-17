@@ -7,6 +7,7 @@
 #include "../AnimatedSprite.hpp"
 #include <cpp3ds/Graphics/Sprite.hpp>
 #include <cpp3ds/Graphics/Text.hpp>
+#include "../Pet.hpp"
 #include <sstream>
 
 namespace Fumaroos {
@@ -14,6 +15,8 @@ namespace Fumaroos {
     class CreatePet : public State {
     public:
         CreatePet(StateStack &stack, Context &context);
+
+        void loadPets();
 
         virtual void renderTopScreen(cpp3ds::Window &window);
 
@@ -23,21 +26,17 @@ namespace Fumaroos {
 
         virtual bool processEvent(const cpp3ds::Event &event);
 
-        std::string convert(float number);
-
     private:
         cpp3ds::Text m_text;
-
 
         gui3ds::Button m_sexToggle;
         gui3ds::Button m_backButton;
 
-//        Animation m_moldAnim;
         SpriteManager m_animSpriteSheet;
 
         AnimatedSprite m_moldSprite;
-
-        AnimatedSprite m_shadowSprite;
+        int m_hilighted = 0;
+        std::vector<AnimatedSprite> m_shadowSprites;
 
     };
 

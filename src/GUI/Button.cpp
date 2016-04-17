@@ -3,9 +3,7 @@
 
 namespace gui3ds {
 
-    Button::Button()
-            : m_needsUpdate(true), m_active(false) {
-
+    Button::Button() : m_needsUpdate(true), m_active(false) {
     }
 
     void Button::draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const {

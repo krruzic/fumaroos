@@ -3,6 +3,7 @@
 
 #include "StateIdentifiers.hpp"
 #include "../Management/TextureManager.hpp"
+#include "../Pet.hpp"
 #include <cpp3ds/System/Time.hpp>
 #include <cpp3ds/Window/Event.hpp>
 #include <cpp3ds/System/String.hpp>
@@ -69,8 +70,9 @@ namespace Fumaroos {
     private:
         StateStack *m_stack;
         Context m_context;
+        Pet *m_pet;
     };
 
-} // namespace DrawAtack
+} // namespace Fumaroos
 
 #endif // FUMAROOS_STATE_HPP
