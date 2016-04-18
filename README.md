@@ -42,6 +42,7 @@ This project requires [CPP3DS](https://github.com/cpp3ds/cpp3ds/) and all of its
     - slot machine
     - tug o' war (hit button that appears on screen fast)
     - plinko
+    - flappers (flappy bird clone)  :white_check_mark:
 
 
 ### Gameplay ###
