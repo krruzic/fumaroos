@@ -16,15 +16,18 @@ public:
 
     cpp3ds::Vector2f getSize();
 
-    cpp3ds::IntRect getIntRect(const cpp3ds::Vector2f &position);
+    cpp3ds::FloatRect getBounding();
 
     void update(float delta);
 
     void setSprite(AnimatedSprite sprite);
 
+    void move(float x, float y);
+    void setPosition(float x, float y);
+
 private:
     AnimatedSprite m_sprite;
-//    cpp3ds::IntRect m_bounding;
+    cpp3ds::RectangleShape m_bounding;
 };
 
 

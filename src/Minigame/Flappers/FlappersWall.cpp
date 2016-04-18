@@ -5,8 +5,8 @@
 
 FlappersWall::FlappersWall()
 {
-    gapHeight = 90;
-    minHeight = 40;
+    gapHeight = 70;
+    minHeight = 20;
     wallWidth = 52;
     wallLower.setSize(cpp3ds::Vector2f(wallWidth, minHeight + rand() % (240
                                                                     - 2 * minHeight - gapHeight)));
@@ -14,6 +14,11 @@ FlappersWall::FlappersWall()
     wallLower.setPosition(0, 240 - wallLower.getSize().y);
     wallUpper.setPosition(0, 0);
 }
+
+//void FlappersWall::setPosition(float x, float y) {
+//    wallLower.setPosition(x, 240 - wallLower.getSize().y);
+//    wallUpper.setPosition(x, y);
+//}
 
 void FlappersWall::draw(cpp3ds::RenderTarget& target, cpp3ds::RenderStates states) const
 {

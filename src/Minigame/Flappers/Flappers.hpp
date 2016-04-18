@@ -31,6 +31,7 @@ namespace Fumaroos {
 
         void loadWallTextures(FlappersWall &wall);
 
+        std::string intToString(int a);
 
     private:
         SpriteManager m_animSpriteSheet;

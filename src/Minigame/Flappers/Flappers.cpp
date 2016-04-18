@@ -1,4 +1,5 @@
 #include <string>
+#include <sstream>
 #include "Flappers.hpp"
 
 namespace Fumaroos {
@@ -22,7 +23,7 @@ namespace Fumaroos {
         m_pointsText.setPosition(380.f - m_pointsText.getLocalBounds().width, 0.f);
 
         wallDistance = 120;
-        jumpVelocity = -40;
+        jumpVelocity = -60;
         gravity = 90;
         birdarooVelocity = 0.f;
         wallSpeed = -340;
@@ -33,18 +34,17 @@ namespace Fumaroos {
     bool Flappers::update(float delta) {
         m_birdaroo.update(delta);
 //        std::string m_pointsString = std::to_string(m_points);
+        m_pointsText.setString(_(intToString(m_points)));
         m_pointsText.setPosition(380.f - m_pointsText.getLocalBounds().width, 0.f);
-
-//        m_pointsText.setString(_(m_pointsString));
         if (!paused) {
             move_delta += delta;
             if (move_delta >= 0.1f) {
                 moveBird(delta);
                 moveWalls(delta);
+                checkBirdBounds();
+                handleCollisions();
                 move_delta = 0;
             }
-            checkBirdBounds();
-            handleCollisions();
         }
         return true;
     }
@@ -54,6 +54,9 @@ namespace Fumaroos {
             if (event.key.code == cpp3ds::Keyboard::A) {
                 birdarooVelocity = jumpVelocity;
                 paused = false;
+            }
+            if (event.key.code == cpp3ds::Keyboard::X) {
+                paused = true;
             }
         }
         return false;
@@ -97,22 +100,22 @@ namespace Fumaroos {
     }
 
     void Flappers::handleCollisions() {
+//            restart();
         for (std::deque<FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
-            cpp3ds::IntRect lowerIntRect = (*it).getLowerIntRect((*it).getPosition());
-            cpp3ds::IntRect upperIntRect = (*it).getUpperIntRect((*it).getPosition());
-            cpp3ds::IntRect birdIntRect = m_birdaroo.getIntRect(m_birdaroo.getPosition());
-            cpp3ds::IntRect inbetweenRect = cpp3ds::IntRect(lowerIntRect.left, lowerIntRect.height, lowerIntRect.width,
-                                                            240 - upperIntRect.height - lowerIntRect.height);
-            if (lowerIntRect.intersects(birdIntRect) || upperIntRect.intersects(birdIntRect)) {
-                restart();
-            }
-            else if (m_birdaroo.getPosition().y + m_birdaroo.getSize().y <= 0 &&
-                     m_birdaroo.getPosition().x + m_birdaroo.getSize().x > (*it).getPosition().x &&
-                     m_birdaroo.getPosition().x < (*it).getPosition().x
-                                                  + (*it).getWidth()) {
-                restart();
+            cpp3ds::IntRect m_temp1 = (*it).getLowerIntRect((*it).getPosition());
+            cpp3ds::IntRect m_temp2 = (*it).getUpperIntRect((*it).getPosition());
+            if (m_birdaroo.getBounding().left + m_birdaroo.getBounding().width >= m_temp1.left &&
+                m_birdaroo.getBounding().left <= m_temp1.left + m_temp1.width) {
+                if (m_birdaroo.getBounding().top >= m_temp1.top) { // touching lower pipe
+                    restart();
+                } else if (m_birdaroo.getBounding().top - m_birdaroo.getBounding().height <=
+                           m_temp2.top + m_temp2.height) { // touching upper pipe
+                    restart();
+                }
             }
         }
+        if (m_birdaroo.getBounding().top >= 240)
+            restart();
     }
 
     void Flappers::checkBirdBounds() {
@@ -127,6 +130,10 @@ namespace Fumaroos {
 
             int distance = 400 - (*it).getPosition().x - (*it).getWidth();
 
+
+            if (distance > m_birdaroo.getBounding().left - m_birdaroo.getBounding().width)
+                m_points++;
+
             if (it == --m_walls.end()) {
                 if (distance >= wallDistance) {
                     FlappersWall wall;
@@ -136,10 +143,17 @@ namespace Fumaroos {
                     break;
                 }
             }
-
-            if (distance >= 400) {
+            if (distance >= 390) {
                 m_walls.pop_front();
             }
+
         }
+    }
+
+
+    std::string Flappers::intToString(int a) {
+        std::ostringstream temp;
+        temp << a;
+        return temp.str();
     }
 }

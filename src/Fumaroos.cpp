@@ -1,6 +1,8 @@
 #include "Fumaroos.hpp"
 #include "States/TitleState.hpp"
 #include "States/CreatePet.hpp"
+#include "Minigame/Flappers/Flappers.hpp"
+
 using namespace cpp3ds;
 
 namespace Fumaroos {
@@ -10,7 +12,7 @@ namespace Fumaroos {
               m_stateStack(State::Context(m_name, m_data, m_color, m_texmgr)) {
         m_stateStack.registerState<TitleState>(States::Title);
         m_stateStack.registerState<CreatePet>(States::CreatePet);
-
+        m_stateStack.registerState<Flappers>(States::Flappers);
         m_stateStack.pushState(States::Title);
     }
 
