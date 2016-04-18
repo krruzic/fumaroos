@@ -75,6 +75,7 @@ public:
 
     void setFrame(std::size_t newFrame, bool resetTime = true);
 
+    cpp3ds::Vector2f getSize();
 private:
     const SpriteManager *m_spriteSheet;
     float m_frameTime;

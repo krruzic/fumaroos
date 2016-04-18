@@ -126,6 +126,11 @@ bool AnimatedSprite::processEvent(const cpp3ds::Event &event) {
     return false;
 }
 
+cpp3ds::Vector2f AnimatedSprite::getSize() {
+    cpp3ds::IntRect temp = m_spriteSheet->getFrame(this->m_name, 1);
+    return cpp3ds::Vector2f(temp.width, temp.height);
+}
+
 void AnimatedSprite::draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const {
     states.transform *= getTransform();
     target.draw(m_sprite, states);

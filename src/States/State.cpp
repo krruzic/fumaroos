@@ -14,10 +14,6 @@ namespace Fumaroos {
             : m_stack(&stack), m_context(context) {
     }
 
-//    State::State(StateStack &stack, Context &context, Pet *pet) : m_stack(&stack), m_context(context), m_pet(pet) {
-//
-//    }
-
     State::~State() {
     }
 

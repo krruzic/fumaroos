@@ -8,8 +8,9 @@ namespace Fumaroos {
             Title = 1,
             Menu = 2,
             CreatePet = 3,
-            Play = 4,
+            Pause = 4,
             BackGround = 5,
+            Flappers = 6
         };
     }
 }

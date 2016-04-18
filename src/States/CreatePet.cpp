@@ -39,10 +39,10 @@ namespace Fumaroos {
         m_text.setPosition(std::round(160.f - m_text.getLocalBounds().width / 2.f) - 10.f, 2.f);
 
         m_animSpriteSheet.addFrames("shadow", cpp3ds::IntRect(0, 64, 128, 64), 2, 64);
+        AnimatedSprite m_temp = AnimatedSprite(0.4f, false, true, "shadow");
+        m_temp.setSpriteManager(m_animSpriteSheet);
 
         for (int i = 0; i < 8; i++) {
-            AnimatedSprite m_temp = AnimatedSprite(0.4f, false, true, "shadow");
-            m_temp.setSpriteManager(m_animSpriteSheet);
             m_shadowSprites.push_back(m_temp);
             m_shadowSprites[i].setPosition(29.f + (i * 64), 76.f);
             if (i >= 4)
@@ -111,6 +111,10 @@ namespace Fumaroos {
                     m_hilighted -= 4;
                 }
             }
+            if (event.key.code == cpp3ds::Keyboard::A) {
+                requestStackPop();
+                requestStackPush(States::Flappers);
+            }
         }
         for (int i = 0; i < m_shadowSprites.size(); ++i) {
             bool touched = m_shadowSprites[i].processEvent(event);
@@ -124,6 +128,6 @@ namespace Fumaroos {
         m_backButton.processEvent(event);
         m_sexToggle.processEvent(event);
 
-        return false;
+        return true;
     }
 } // namespace Fumaroos

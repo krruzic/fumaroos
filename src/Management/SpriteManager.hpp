@@ -37,7 +37,7 @@ public:
     void addFrames(const std::string name, cpp3ds::IntRect rect, int frames, int animHeight);
 
 
-    cpp3ds::Sprite getSprite(cpp3ds::IntRect rect);
+    cpp3ds::Sprite getSprite(std::string name);
 
     void setSpriteSheet(const cpp3ds::Texture &texture);
 

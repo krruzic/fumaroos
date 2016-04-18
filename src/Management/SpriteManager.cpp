@@ -24,9 +24,9 @@ void SpriteManager::addFrames(const std::string name, cpp3ds::IntRect rect, int 
 }
 
 // return the sprite that is inside the rect passed
-cpp3ds::Sprite SpriteManager::getSprite(cpp3ds::IntRect rect) {
+cpp3ds::Sprite SpriteManager::getSprite(std::string name) {
     cpp3ds::Sprite temp;
-    temp.setTextureRect(rect);
+    temp.setTextureRect(this->getFrame(name, 0));
     return temp;
 }
 
