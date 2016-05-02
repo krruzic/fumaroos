@@ -52,6 +52,8 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/Minigame/Flappers/Flappers.cpp
         ${PROJECT_SOURCE_DIR}/src/Minigame/Flappers/FlappersWall.cpp
         ${PROJECT_SOURCE_DIR}/src/Minigame/Flappers/Birdaroo.cpp
+        ${PROJECT_SOURCE_DIR}/src/Minigame/Dance/DanceButton.cpp
+        ${PROJECT_SOURCE_DIR}/src/Minigame/Dance/Dance.cpp
         ${PROJECT_SOURCE_DIR}/src/GUI/NineSliceButton.cpp
         ${PROJECT_SOURCE_DIR}/src/GUI/NinePatch.cpp
         ${PROJECT_SOURCE_DIR}/src/GUI/Button.cpp

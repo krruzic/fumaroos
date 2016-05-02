@@ -2,7 +2,7 @@
 #define FUMAROOS_PETSPECIES_HPP
 namespace Fumaroos {
     enum SPECIES {
-        Snake,
+        Mold,
         Bear,
         Cat,
     };

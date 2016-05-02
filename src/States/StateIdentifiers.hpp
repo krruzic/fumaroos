@@ -10,7 +10,8 @@ namespace Fumaroos {
             CreatePet = 3,
             Pause = 4,
             BackGround = 5,
-            Flappers = 6
+            Flappers = 6,
+            Dance = 7,
         };
     }
 }

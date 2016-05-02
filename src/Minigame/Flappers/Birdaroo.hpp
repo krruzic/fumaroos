@@ -6,29 +6,30 @@
 #include <cpp3ds/Graphics/Texture.hpp>
 #include "../../AnimatedSprite.hpp"
 
+namespace Minigame {
+    class Birdaroo : public cpp3ds::Drawable, public cpp3ds::Transformable {
 
-class Birdaroo : public cpp3ds::Drawable, public cpp3ds::Transformable {
+    public:
+        Birdaroo();
 
-public:
-    Birdaroo();
+        void draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const override;
 
-    void draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const override;
+        cpp3ds::Vector2f getSize();
 
-    cpp3ds::Vector2f getSize();
+        cpp3ds::FloatRect getBounding();
 
-    cpp3ds::FloatRect getBounding();
+        void update(float delta);
 
-    void update(float delta);
+        void setSprite(AnimatedSprite sprite);
 
-    void setSprite(AnimatedSprite sprite);
+        void move(float x, float y);
 
-    void move(float x, float y);
-    void setPosition(float x, float y);
+        void setPosition(float x, float y);
 
-private:
-    AnimatedSprite m_sprite;
-    cpp3ds::RectangleShape m_bounding;
-};
-
+    private:
+        AnimatedSprite m_sprite;
+        cpp3ds::RectangleShape m_bounding;
+    };
+}
 
 #endif //FUMAROOS_BIRDAROO_HPP

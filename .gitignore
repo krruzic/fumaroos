@@ -27,5 +27,12 @@
 *.out
 *.app
 
-# IDE directory
+# IDE stuff
 .idea
+*.kdev4
+.kdev4/
+.kdev_include_paths
+
+# directories to exclude
+bin/*
+build/*

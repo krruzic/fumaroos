@@ -29,14 +29,14 @@ namespace Fumaroos {
 
         void checkBirdBounds();
 
-        void loadWallTextures(FlappersWall &wall);
+        void loadWallTextures(Minigame::FlappersWall &wall);
 
         std::string intToString(int a);
 
     private:
         SpriteManager m_animSpriteSheet;
-        Birdaroo m_birdaroo;
-        std::deque<FlappersWall> m_walls;
+        Minigame::Birdaroo m_birdaroo;
+        std::deque<Minigame::FlappersWall> m_walls;
         cpp3ds::Text m_pointsText;
         int wallSpeed;
         int wallDistance;

@@ -64,7 +64,7 @@ namespace Fumaroos {
 
     void Flappers::renderTopScreen(cpp3ds::Window &window) {
         window.clear(cpp3ds::Color(0, 150, 255));
-        for (std::deque<FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
+        for (std::deque<Minigame::FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
             window.draw(*it);
         }
         window.draw(m_pointsText);
@@ -81,13 +81,13 @@ namespace Fumaroos {
         m_birdaroo.setPosition(0.2 * 400, (240 - m_birdaroo.getSize().y) / 2);
         paused = true;
         m_walls.clear();
-        FlappersWall newWall;
+        Minigame::FlappersWall newWall;
         loadWallTextures(newWall);
         newWall.setPosition(0.7 * 400, 0);
         m_walls.push_back(newWall);
     }
 
-    void Flappers::loadWallTextures(FlappersWall &wall) {
+    void Flappers::loadWallTextures(Minigame::FlappersWall &wall) {
         wall.getLowerWall().setTexture(&this->getContext().texmgr.getRef(States::Flappers, "pipeB"));
         wall.getUpperWall().setTexture(&this->getContext().texmgr.getRef(States::Flappers, "pipeT"));
     }
@@ -101,7 +101,7 @@ namespace Fumaroos {
 
     void Flappers::handleCollisions() {
 //            restart();
-        for (std::deque<FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
+        for (std::deque<Minigame::FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
             cpp3ds::IntRect m_temp1 = (*it).getLowerIntRect((*it).getPosition());
             cpp3ds::IntRect m_temp2 = (*it).getUpperIntRect((*it).getPosition());
             if (m_birdaroo.getBounding().left + m_birdaroo.getBounding().width >= m_temp1.left &&
@@ -125,7 +125,7 @@ namespace Fumaroos {
     }
 
     void Flappers::moveWalls(float delta) {
-        for (std::deque<FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
+        for (std::deque<Minigame::FlappersWall>::iterator it = m_walls.begin(); it != m_walls.end(); ++it) {
             (*it).move(cpp3ds::Vector2f(delta * wallSpeed, 0));
 
             int distance = 400 - (*it).getPosition().x - (*it).getWidth();
@@ -136,7 +136,7 @@ namespace Fumaroos {
 
             if (it == --m_walls.end()) {
                 if (distance >= wallDistance) {
-                    FlappersWall wall;
+                    Minigame::FlappersWall wall;
                     wall.setPosition(400, 0);
                     loadWallTextures(wall);
                     m_walls.push_back(wall);

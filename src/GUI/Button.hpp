@@ -16,7 +16,7 @@ namespace gui3ds {
 
         Button();
 
-        bool processEvent(const cpp3ds::Event &event);
+        virtual bool processEvent(const cpp3ds::Event &event);
 
         void toggle();
 
@@ -29,20 +29,22 @@ namespace gui3ds {
 
         void onClick(const std::function<void()> &callback);
 
-
         void setPosition(float x, float y);
+
+        void move(float x, float y);
+
+        cpp3ds::IntRect getRect();
 
     protected:
         virtual void draw(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const;
 
         void ensureUpdate(cpp3ds::RenderTarget &target, cpp3ds::RenderStates states) const;
 
+        cpp3ds::Sprite m_sprite;
+        cpp3ds::Sprite m_activeSprite;
+
     private:
-        cpp3ds::Sprite m_texture;
-        cpp3ds::Sprite m_activeTexture;
-
         std::function<void()> m_clickFunction;
-
         mutable bool m_needsUpdate;
         bool m_touched = false;
         bool m_active;

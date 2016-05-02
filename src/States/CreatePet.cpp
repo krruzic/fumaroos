@@ -113,7 +113,7 @@ namespace Fumaroos {
             }
             if (event.key.code == cpp3ds::Keyboard::A) {
                 requestStackPop();
-                requestStackPush(States::Flappers);
+                requestStackPush(States::Dance);
             }
         }
         for (int i = 0; i < m_shadowSprites.size(); ++i) {
