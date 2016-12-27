@@ -1,4 +1,5 @@
 #include "NineSliceButton.hpp"
+#include <cmath>
 
 
 namespace gui3ds {

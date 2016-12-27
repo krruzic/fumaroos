@@ -1,5 +1,5 @@
 #include "TitleState.hpp"
-
+#include <cmath>
 
 namespace Fumaroos {
 

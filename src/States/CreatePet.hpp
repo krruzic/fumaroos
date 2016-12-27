@@ -9,6 +9,7 @@
 #include <cpp3ds/Graphics/Text.hpp>
 #include "../Pet.hpp"
 #include <sstream>
+#include <cmath>
 
 namespace Fumaroos {
 

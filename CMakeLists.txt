@@ -28,6 +28,8 @@ endif()
 set(CMAKE_MODULE_PATH "${CPP3DS}/cmake" ${CMAKE_MODULE_PATH})
 include(cpp3ds)
 
+link_directories(${CPP3DS}/build/lib)
+link_directories(${DEVKITPRO}/portlibs/3ds/lib)
 # Use either nihstro or picasso for your shader scripts
 set(SHADER_AS nihstro)
 
@@ -59,15 +61,13 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/GUI/Button.cpp
         )
 FILE(GLOB_RECURSE SHADER_FILES ${PROJECT_SOURCE_DIR}/res/romfs/shaders/[^.]*.vsh)
-
 ##################################################
 # Don't usually need to change anything below
 ##################################################
 set(CPP3DS_ARM_FLAGS "-g -O2 -fno-rtti -fno-exceptions -march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft -std=c++11")
 set(CPP3DS_EMU_FLAGS "-g -O0")
 
-set(CPP3DS_ARM_LIBS cpp3ds-window cpp3ds-graphics cpp3ds-audio cpp3ds-network cpp3ds-system citro3d mbedtls mbedx509 mbedcrypto ctru freetype png z vorbisenc vorbisfile vorbis ogg bz2)
-set(CPP3DS_EMU_LIBS cpp3ds-emu sfml-graphics sfml-window sfml-system sfml-network sfml-audio openal GLEW GL jpeg freetype vorbisenc vorbisfile vorbis ogg mbedtls mbedx509 mbedcrypto pthread Qt5Widgets)
-
+set(CPP3DS_ARM_LIBS cpp3ds-window cpp3ds-network cpp3ds-graphics cpp3ds-audio cpp3ds-system citro3d ctru freetype png z)
+set(CPP3DS_EMU_LIBS cpp3ds-emu sfml-graphics sfml-window sfml-system sfml-network sfml-audio openal GLEW GL jpeg freetype pthread Qt5Widgets)
 add_subdirectory(${CPP3DS}/cmake/template_arm build/arm)
 add_subdirectory(${CPP3DS}/cmake/template_emu build/emu)

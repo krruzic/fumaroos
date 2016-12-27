@@ -1,5 +1,6 @@
 // altered from here: https://github.com/SFML/SFML/wiki/Source:-AnimatedSprite
 #include "AnimatedSprite.hpp"
+#include <cmath>
 
 AnimatedSprite::AnimatedSprite(float frameTime, bool paused, bool looped, std::string name) :
         m_spriteSheet(NULL), m_frameTime(frameTime), m_currentFrame(0), m_isPaused(paused), m_isLooped(looped),
